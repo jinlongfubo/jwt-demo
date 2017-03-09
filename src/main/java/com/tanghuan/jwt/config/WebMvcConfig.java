@@ -24,7 +24,7 @@ import java.util.List;
 
 
 @Configuration
-@Import(value = {WebSecurityConfig.class, ApiSecurityConfig.class})
+@Import(value = {ApiSecurityConfig.class, AdminWebSecurityConfig.class, UserWebSecurityConfig.class})
 @ComponentScan(basePackages = {"com.tanghuan.jwt.controller"})
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
