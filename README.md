@@ -21,3 +21,6 @@
         https://github.com/szerhusenBC/jwt-spring-security-demo
         
         剩下的在上面的资料评论区域可以找到相关项目
+
+### 问题：
+1. 如果重新登陆生成新的Token以后之前的Token还是可以使用
