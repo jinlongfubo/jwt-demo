@@ -1,6 +1,5 @@
 package com.tanghuan.jwt.controller.api;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tanghuan.jwt.security.entity.AuthenToken;
 import com.tanghuan.jwt.security.entity.JwtAuthenToken;
 import com.tanghuan.jwt.service.AuthenService;
