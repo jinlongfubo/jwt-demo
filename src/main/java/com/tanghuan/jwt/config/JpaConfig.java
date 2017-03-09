@@ -36,10 +36,10 @@ public class JpaConfig {
     public DataSource dataSource() {
         DruidDataSource ds = new DruidDataSource();
         ds.setDriverClassName("org.gjt.mm.mysql.Driver");
-        String url = "jdbc:mysql://127.0.0.1:3306/jwt?createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC";
+        String url = "jdbc:mysql://10.0.10.156:3306/jwt?createDatabaseIfNotExist=true&characterEncoding=utf8&useSSL=true&serverTimezone=UTC";
         ds.setUrl(url);
         ds.setUsername("root");
-        ds.setPassword("root");
+        ds.setPassword("admin");
 
         // 配置初始化大小，最大，最小
         ds.setInitialSize(10);

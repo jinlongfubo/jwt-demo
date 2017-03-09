@@ -1,5 +1,7 @@
 package com.tanghuan.jwt.config;
 
+import com.tanghuan.jwt.security.utils.JwtUtil;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,5 +26,10 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests().antMatchers("/api/login", "/api/refresh", "/api/logout").permitAll()
             .anyRequest().authenticated()
             .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
+    @Bean
+    public JwtUtil jwtUtil() {
+        return new JwtUtil();
     }
 }

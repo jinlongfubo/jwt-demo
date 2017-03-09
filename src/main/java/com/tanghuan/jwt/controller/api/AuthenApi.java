@@ -2,6 +2,9 @@ package com.tanghuan.jwt.controller.api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tanghuan.jwt.security.entity.AuthenToken;
+import com.tanghuan.jwt.security.entity.JwtAuthenToken;
+import com.tanghuan.jwt.service.AuthenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,15 +22,15 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 public class AuthenApi {
 
+    @Autowired
+    private AuthenService authenService;
+
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenToken token, Device device) {
+    public ResponseEntity login(@RequestBody @Valid AuthenToken autToken, Device device) {
 
-        JSONObject object = new JSONObject();
-        object.put("username", token.getUsername());
-        object.put("password", token.getPassword());
-        object.put("device", device.toString());
+        JwtAuthenToken token = authenService.login(autToken, device);
 
-        return ResponseEntity.ok(object);
+        return ResponseEntity.ok(token);
     }
 
 }
