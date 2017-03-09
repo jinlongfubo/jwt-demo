@@ -4,6 +4,7 @@ import com.tanghuan.jwt.BaseTest;
 import com.tanghuan.jwt.entity.domain.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.beans.Transient;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ public class UserRepositoryTest extends BaseTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Test
     @Transient
     public void insertUser() throws Exception {
@@ -24,12 +28,12 @@ public class UserRepositoryTest extends BaseTest {
         List<User> users = new ArrayList<>();
         User user = new User();
         user.setUsername("admin");
-        user.setPassword("admin");
+        user.setPassword(passwordEncoder.encode("admin"));
         users.add(user);
 
         user = new User();
         user.setUsername("user");
-        user.setPassword("user");
+        user.setPassword(passwordEncoder.encode("admin"));
         users.add(user);
 
         userRepository.save(users);

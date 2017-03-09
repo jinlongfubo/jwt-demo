@@ -16,17 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Order(2)
 public class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        // 配置SpringSecurity忽略静态资源
-//        web.ignoring().antMatchers("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.ico");
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService());
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.antMatcher("/admin/**")
@@ -45,22 +34,5 @@ public class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter {
             // 配置SESSION管理
             .and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/admin/login.html");
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return new UserDetailsServiceImpl();
-//    }
-//
-//
-//    @Bean(BeanIds.AUTHENTICATION_MANAGER)
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder(8);
-//    }
 
 }
