@@ -63,7 +63,7 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/main.html").failureUrl("/login.html?err=true").permitAll()
 
             // 配置登出
-            .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login.html").permitAll()
+            .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login.html?logout=true").permitAll()
 
             // 配置SESSION管理
             .and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/login.html");
