@@ -1,10 +1,12 @@
 package com.tanghuan.jwt.config;
 
+import com.tanghuan.jwt.security.adm.AccessDecisionManagerImpl;
 import com.tanghuan.jwt.security.smds.FilterInvocationSecurityMetadataSourceImpl;
 import com.tanghuan.jwt.security.uds.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -47,6 +49,9 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
                     // 添加自定义的SecurityMetadataSource
                     fsi.setSecurityMetadataSource(filterInvocationSecurityMetadataSource());
+
+                    // 添加自定义的权限鉴定
+                    fsi.setAccessDecisionManager(accessDecisionManager());
                     return fsi;
                 }
             })
@@ -85,5 +90,10 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource() {
         return new FilterInvocationSecurityMetadataSourceImpl();
+    }
+
+    @Bean
+    public AccessDecisionManager accessDecisionManager() {
+        return new AccessDecisionManagerImpl();
     }
 }
