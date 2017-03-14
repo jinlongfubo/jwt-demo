@@ -1,10 +1,6 @@
 package com.tanghuan.jwt.entity.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -15,20 +11,22 @@ import java.util.List;
 @Table(name = "t_role")
 public class Role extends SuperEntity {
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String name;
 
+    // 状态
+    @Column(name = "enabled", columnDefinition = "bit(1) default 1")
     private boolean enabled = true;
 
-    @ManyToMany(targetEntity = User.class, mappedBy = "roles")
-    private List<User> users = new ArrayList<>();
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private List<User> users;
 
-    public Role() {
-    }
-
-    public Role(String name) {
-        this.name = name;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "m_role_permission",
+            joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id", referencedColumnName = "id")})
+    private List<Permission> permissions;
 
     public String getName() {
         return name;
@@ -44,5 +42,21 @@ public class Role extends SuperEntity {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

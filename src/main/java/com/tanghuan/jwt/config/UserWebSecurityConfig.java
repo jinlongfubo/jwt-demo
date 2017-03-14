@@ -1,11 +1,13 @@
 package com.tanghuan.jwt.config;
 
+import com.tanghuan.jwt.security.smds.FilterInvocationSecurityMetadataSourceImpl;
 import com.tanghuan.jwt.security.uds.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -14,6 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * Created by tanghuan on 2017/3/8.
@@ -39,7 +43,13 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests().antMatchers("/", "/index", "/index.html").permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().authenticated().withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
+                    // 添加自定义的SecurityMetadataSource
+                    fsi.setSecurityMetadataSource(filterInvocationSecurityMetadataSource());
+                    return fsi;
+                }
+            })
             .and()
 
             // 配置登录
@@ -71,4 +81,9 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(8);
     }
 
+
+    @Bean
+    public FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource() {
+        return new FilterInvocationSecurityMetadataSourceImpl();
+    }
 }

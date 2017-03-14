@@ -23,8 +23,8 @@ public class RoleRepositoryTest extends BaseTest {
 
         List<Role> roles = new ArrayList<>();
 
-        roles.add(new Role("ADMIN"));
-        roles.add(new Role("USER"));
+//        roles.add(new Role("ADMIN"));
+//        roles.add(new Role("USER"));
 
         roleRepository.save(roles);
     }

@@ -1,11 +1,12 @@
 package com.tanghuan.jwt.security.entity;
 
+import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
  * Created by tanghuan on 2017/3/8.
  */
-public class GrantedAuthorityImpl implements GrantedAuthority {
+public class GrantedAuthorityImpl implements GrantedAuthority, ConfigAttribute {
 
     private String authority;
 
@@ -25,6 +26,11 @@ public class GrantedAuthorityImpl implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
+        return authority;
+    }
+
+    @Override
+    public String getAttribute() {
         return authority;
     }
 
