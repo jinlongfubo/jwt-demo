@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -24,7 +25,7 @@ import java.util.List;
 
 
 @Configuration
-@Import(value = {ApiSecurityConfig.class, AdminWebSecurityConfig.class, UserWebSecurityConfig.class})
+//@Import(value = {ApiSecurityConfig.class, AdminWebSecurityConfig.class, UserWebSecurityConfig.class})
 @ComponentScan(basePackages = {"com.tanghuan.jwt.controller"})
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -73,6 +74,20 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public DeviceHandlerMethodArgumentResolver deviceHandlerMethodArgumentResolver() {
         return new DeviceHandlerMethodArgumentResolver();
+    }
+
+    /**
+     * 配置文件上传的解析器
+     *
+     * @return
+     */
+    @Bean(name = "filterMultipartResolver")
+    public CommonsMultipartResolver filterMultipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        // 单位是字节 50 MB = 50000000
+        multipartResolver.setMaxUploadSize(70000000);
+        multipartResolver.setDefaultEncoding("utf-8");
+        return multipartResolver;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.tanghuan.jwt.config;
 
 import org.springframework.context.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
@@ -8,7 +9,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
  */
 
 @Configuration
-@Import(value = {JpaConfig.class, WebMvcConfig.class})
+//@Import(value = {JpaConfig.class, WebMvcConfig.class})
+@Import(value = {JpaConfig.class, WebSecurityConfig.class})
 @ComponentScan(
         basePackages = {
                 "com.tanghuan.jwt.controller",
@@ -20,17 +22,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class AppConfig {
 
     /**
-     * 配置文件上传的解析器
-     *
+     * Spring 提供的HTTP Client工具i
      * @return
      */
-    @Bean(name = "filterMultipartResolver")
-    public CommonsMultipartResolver filterMultipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        // 单位是字节 50 MB = 50000000
-        multipartResolver.setMaxUploadSize(70000000);
-        multipartResolver.setDefaultEncoding("utf-8");
-        return multipartResolver;
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }
