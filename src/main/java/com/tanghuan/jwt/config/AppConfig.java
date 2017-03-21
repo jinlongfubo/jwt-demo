@@ -9,7 +9,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
  */
 
 @Configuration
-//@Import(value = {JpaConfig.class, WebMvcConfig.class})
 @Import(value = {JpaConfig.class, WebSecurityConfig.class})
 @ComponentScan(
         basePackages = {
